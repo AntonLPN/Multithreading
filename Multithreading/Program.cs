@@ -72,8 +72,11 @@ namespace Multithreading
                             Console.Write("Enter end value >>");
                             Int32.TryParse(Console.ReadLine(), out startEnd.end);
 
-                            MethodTask2(startEnd);
+                            ThreadStart threadStart = new ThreadStart(()=>MethodTask2(startEnd));
+                            Thread thread = new Thread(threadStart);
+                            thread.Start();
 
+                            Console.ReadKey();
 
 
                         }
@@ -96,7 +99,10 @@ namespace Multithreading
                                 arr[i]= rnd.Next(0, 10);   //Получить случайное число (в диапазоне от 0 до 10)
                             }
 
-                            MethodTask3(arr);
+                            ThreadStart threadStart = new ThreadStart(() => MethodTask3(arr));
+                            Thread thread = new Thread(threadStart);
+                            thread.Start();
+                            Console.ReadKey();
 
 
                         }
@@ -123,6 +129,7 @@ namespace Multithreading
                                 Console.Write(arr[i] + "|");
                             }
                             Console.WriteLine();
+                            //потокии запускаются внутри метода
                             MaxMinMidl(arr);
 
 
@@ -157,7 +164,10 @@ namespace Multithreading
 
 
         }
-
+        /// <summary>
+        /// мтод принимает аргусмент обьект который задает начало и конец цикла
+        /// </summary>
+        /// <param name="parametrs"></param>
         static void MethodTask2(Object parametrs)
         {
             StartEnd startEnd = parametrs as StartEnd;
@@ -171,7 +181,10 @@ namespace Multithreading
 
 
         }
-
+        /// <summary>
+        /// метод выводит значения массива
+        /// </summary>
+        /// <param name="obj"></param>
         static void MethodTask3(Object obj)
         {
             var arr = obj as Array;
@@ -184,6 +197,10 @@ namespace Multithreading
 
 
         }
+        /// <summary>
+        /// Метод запускает потоки для определения значений массива максимальное, минимальное, среденее
+        /// </summary>
+        /// <param name="arr"></param>
         static void MaxMinMidl(int []arr)
         {
             //поток минимального значения
@@ -201,7 +218,10 @@ namespace Multithreading
             Thread thread3 = new Thread(threadMid);
             thread3.Start();
         }
-
+        /// <summary>
+        /// немного старого способа для улучшения практики так как такое спрашивают на собеседовании
+        /// </summary>
+        /// <param name="arr"></param>
         static void Max(int []arr)
         {
             int max = arr[0];
@@ -216,6 +236,10 @@ namespace Multithreading
 
             Console.WriteLine($"Maximum array value is : {max}");
         }
+        /// <summary>
+        /// немного старого способа для улучшения практики так как такое спрашивают на собеседовании
+        /// </summary>
+        /// <param name="arr"></param>
         static void Min(int[] arr)
         {
             int min = arr[0];
@@ -230,7 +254,10 @@ namespace Multithreading
 
             Console.WriteLine($"Minimum array value is : {min}");
         }
-
+        /// <summary>
+        /// немного старого способа для улучшения практики так как такое спрашивают на собеседовании
+        /// </summary>
+        /// <param name="arr"></param>
         static void Midl(int[] arr)
         {
             int midl = 0;
